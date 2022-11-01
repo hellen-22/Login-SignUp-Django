@@ -1,10 +1,11 @@
-import email
 from django.shortcuts import redirect, render
 from django.core.mail import EmailMessage
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.sites.shortcuts import get_current_site
 from django.contrib.auth.models import auth
+from django.contrib.auth.views import PasswordResetView
+from django.contrib.messages.views import SuccessMessageMixin
 from django.db import transaction
 from django.template.loader import render_to_string
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
@@ -38,11 +39,11 @@ def signup(request):
 
                 current_site = get_current_site(request)
                 mail_subject = "Account Activation"
-                message = render_to_string('activation/activate.html',{
-                    'user': user,
-                    'domain': current_site.domain,
-                    'uid': urlsafe_base64_encode(force_bytes(user.pk)),
-                    'token': account_activation_token.make_token(user)
+                message = render_to_string("activation/activate.html",{
+                    "user": user,
+                    "domain": current_site.domain,
+                    "uid": urlsafe_base64_encode(force_bytes(user.pk)),
+                    "token": account_activation_token.make_token(user)
                 })
 
                 email_message = EmailMessage(
@@ -54,7 +55,7 @@ def signup(request):
 
                 email_message.send()
                 
-                return render(request, 'activation/message.html')
+                return render(request, "activation/message.html")
 
         else:
             messages.info(request, "Password Does Not Match")
@@ -62,15 +63,15 @@ def signup(request):
     return render(request, "account/signup.html")
 
 def login(request):
-    if request.method == 'POST':
-        email = request.POST['email']
-        password = request.POST['password']
+    if request.method == "POST":
+        email = request.POST["email"]
+        password = request.POST["password"]
 
         user = auth.authenticate(email=email, password=password)
 
         if user is not None:
             auth.login(request, user)
-            return redirect('users')
+            return redirect("users")
 
     else:
         return render(request, "account/login.html")
@@ -94,8 +95,11 @@ class ActivateAccount(View):
             user.is_active = True
             user.save()
 
-            messages.success(request, ('Your account have been confirmed.'))
-            return redirect('login')
+            messages.success(request, ("Your account have been confirmed."))
+            return redirect("login")
         else:
-            messages.warning(request, ('The confirmation link was invalid, possibly because it has already been used.'))
-            return redirect('signup')
+            messages.warning(request, ("The confirmation link was invalid, possibly because it has already been used."))
+            return redirect("signup")
+
+
+
