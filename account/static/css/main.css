@@ -1,2 +1,30 @@
+body{
+    background-color: rgb(226, 48, 108);
+    height: 100%;
+}
 
+.form-section{
+    background-color: rgb(247, 242, 242);
+    margin: auto;
+    width: 80%;
+    padding: 10px;
+    transform: translate(0%, 10%);
+    border-radius: 10px;
+}
 
+a{
+    color: #000;
+}
+
+h3{
+    text-align: center;
+    padding: 10px;
+}
+
+hr{
+    height: 10px;
+}
+
+.input{
+    padding: 20px;
+}

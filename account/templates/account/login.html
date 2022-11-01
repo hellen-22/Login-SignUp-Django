@@ -15,30 +15,32 @@
     <div class="main">
       <section>
         <div class="container">
-          <div class="content d-flex align-items-center justify-content-center">
-            <form method="POST" class="POST">
-              <div class="mb-3">
-                <label for="exampleInputEmail1" class="form-label">Email address</label>
-                <input type="email" class="form-control" id="email" aria-describedby="emailHelp" name="email" placeholder="Enter Email">
-              </div>
-              <div class="mb-3">
-                <label for="exampleInputPassword1" class="form-label">Password</label>
-                <input type="password" class="form-control" id="password" name="password" placeholder="Enter Password">
-              </div>
-              <div class="row">
-                <div class="col">
-                  <button type="submit" class="btn btn-primary submit">Submit</button>
+          <div class="form-section">
+            <form method="POST" class="form">
+              {% csrf_token %}
+                <h3>LOGIN</h3>
+                <hr>
+              <div class="input">
+                <div class="mb-3 ">
+                  <label for="exampleInputEmail1" class="form-label">Email address</label>
+                  <input type="email" class="form-control" id="email" aria-describedby="emailHelp" name="email" placeholder="Enter Email">
                 </div>
-                <div class="col">
-                  <a href="#" class="forgot_password">Forgot Password</a>
+                <div class="mb-3">
+                  <label for="exampleInputPassword1" class="form-label">Password</label>
+                  <input type="password" class="form-control" id="password" name="password" placeholder="Enter Password">
                 </div>
+                <div class="mb-3">
+                    <button type="submit" class="btn btn-primary submit">Submit</button>
+                </div>
+                <div class="mb-3">
+                  <a href="#" class="forgot_password">Forgot Password?</a>
+                </div>
+                <p class="loginhere ">
+                  Do not have an account ?
+                  <a href="{% url 'signup'%}" class="loginhere-link">Sign Up here</a>
+                </p>
               </div>
-              
             </form>
-            <p class="loginhere">
-              Do not have an account ?
-              <a href="#" class="loginhere-link">Sign Up here</a>
-            </p>
           </div>
         </div>
       </section>
