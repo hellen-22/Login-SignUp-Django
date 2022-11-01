@@ -12,7 +12,6 @@ from django.utils.encoding import force_bytes, force_str
 from django.views import View
 
 
-
 from account.models import CustomUser
 from account.utils import account_activation_token
 
