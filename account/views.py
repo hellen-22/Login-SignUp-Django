@@ -1,13 +1,16 @@
+import email
 from django.shortcuts import redirect, render
 from django.core.mail import EmailMessage
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.sites.shortcuts import get_current_site
+from django.contrib.auth.models import auth
 from django.db import transaction
 from django.template.loader import render_to_string
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from django.utils.encoding import force_bytes, force_str
 from django.views import View
+
 
 
 from account.models import CustomUser
@@ -60,7 +63,18 @@ def signup(request):
     return render(request, "account/signup.html")
 
 def login(request):
-    return render(request, "account/login.html")
+    if request.method == 'POST':
+        email = request.POST['email']
+        password = request.POST['password']
+
+        user = auth.authenticate(email=email, password=password)
+
+        if user is not None:
+            auth.login(request, user)
+            return redirect('users')
+
+    else:
+        return render(request, "account/login.html")
 
 def users(request):
     #response = requests.get("http://127.0.0.1:8000/auth/users/")
